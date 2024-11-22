@@ -5,7 +5,9 @@ static char	*set_line(char *line_buffer);
 
 char	*get_next_line(int fd)
 {
-	char	*buffer;
+	static char	*left_c;
+	char		*line;	
+	char		*buffer;
 
 	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
