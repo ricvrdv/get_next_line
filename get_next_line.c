@@ -6,7 +6,7 @@
 /*   By: rjesus-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 18:02:44 by rjesus-d          #+#    #+#             */
-/*   Updated: 2024/12/04 18:30:55 by rjesus-d         ###   ########.fr       */
+/*   Updated: 2024/12/05 15:42:11 by rjesus-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*get_next_line(int fd)
 		if (!saved)
 			return (NULL);
 	}
-	while (!ft_strchr(saved, '\n'))
+	while (!ft_strchr(saved, '\n'))// !NULL evaluates to true
 	{
 		bytes_read = read_line(fd, &saved);
 		if (bytes_read == 0 && saved && *saved)
@@ -55,17 +55,21 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-static ssize_t	read_line(int fd, char **saved)
+static ssize_t	read_line(int fd, char **saved)// char **saved (ptr to str) allows to modify the string 
 {
-	char	buffer[BUFFER_SIZE + 1];
+	char	*buffer;
 	ssize_t	bytes_read;
 
+	buffer = (char *)malloc(BUFFER_SIZE + 1);
+	if (!buffer)
+		return (-1);
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
 	if (bytes_read > 0)
 	{
 		buffer[bytes_read] = '\0';
 		*saved = ft_strjoin(*saved, buffer);
 	}
+	free(buffer);
 	return (bytes_read);
 }
 
@@ -79,7 +83,7 @@ static char	*get_line(char **saved)
 	new_line = ft_strchr(*saved, '\n');
 	if (new_line)
 	{
-		len = new_line - *saved + 1;
+		len = new_line - *saved + 1;// The +1 is to include de '\n' character
 		line = ft_substr(*saved, 0, len);
 		temp = ft_substr(*saved, len, ft_strlen(*saved) - len);
 		free(*saved);
@@ -111,7 +115,6 @@ char	*ft_strdup(const char *s)
 	return (buffer);
 }
 
-/*
 #include <stdio.h>
 #include <fcntl.h>
 
@@ -120,8 +123,24 @@ int	main()
 	int		fd;
 	char	*line;
 
-	fd = open("test1.txt", O_RDONLY);
-	while((line = get_next_line(fd)))
+	fd = open("animaniac.txt", O_RDONLY);
+	while ((line = get_next_line(fd)))
+	{
+		printf("%s", line);
+		free(line);
+	}
+	close(fd);
+
+	fd = open("ghosts.txt", O_RDONLY);
+	while ((line = get_next_line(fd)))
+	{
+		printf("%s", line);
+		free(line);
+	}
+	close(fd);
+
+	fd = open("hobbes.txt", O_RDONLY);
+	while ((line = get_next_line(fd)))
 	{
 		printf("%s", line);
 		free(line);
@@ -129,4 +148,3 @@ int	main()
 	close(fd);
 	return (0);
 }
-*/
