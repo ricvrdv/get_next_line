@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rjesus-d <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: applecore <applecore@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 18:02:44 by rjesus-d          #+#    #+#             */
-/*   Updated: 2024/12/05 15:42:11 by rjesus-d         ###   ########.fr       */
+/*   Updated: 2024/12/06 00:11:29 by applecore        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,17 @@ char	*get_next_line(int fd)
 	while (!ft_strchr(saved, '\n'))// !NULL evaluates to true
 	{
 		bytes_read = read_line(fd, &saved);
-		if (bytes_read == 0 && saved && *saved)
+		if (bytes_read == 0 && saved && *saved)// EOF with remaining data
 		{
-			line = saved;
-			saved = NULL;
-			return (line);
+			line = saved;// Return the remaining data
+			saved = NULL;// Reset static variable
+			return (line);// Return remaining data before EOF
 		}
-		if (bytes_read == 0 && (!saved || !*saved))
+		if (bytes_read == 0 && (!saved || !*saved)) // EOF with no data
 		{
-			free(saved);
-			saved = NULL;
-			return (NULL);
+			free(saved);// Free memory if it exists
+			saved = NULL;// Reset saved
+			return (NULL);// Return NULL to signal EOF
 		}
 		if (bytes_read < 0)
 		{
