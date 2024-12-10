@@ -6,7 +6,7 @@
 /*   By: rjesus-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 18:02:44 by rjesus-d          #+#    #+#             */
-/*   Updated: 2024/12/05 15:42:11 by rjesus-d         ###   ########.fr       */
+/*   Updated: 2024/12/10 15:35:05 by rjesus-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,33 +29,21 @@ char	*get_next_line(int fd)
 		if (!saved)
 			return (NULL);
 	}
-	while (!ft_strchr(saved, '\n'))// !NULL evaluates to true
+	while (!ft_strchr(saved, '\n'))
 	{
 		bytes_read = read_line(fd, &saved);
 		if (bytes_read == 0 && saved && *saved)
-		{
-			line = saved;
-			saved = NULL;
-			return (line);
-		}
+			return (line = saved, saved = NULL, line);
 		if (bytes_read == 0 && (!saved || !*saved))
-		{
-			free(saved);
-			saved = NULL;
-			return (NULL);
-		}
+			return (free(saved), saved = NULL, NULL);
 		if (bytes_read < 0)
-		{
-			free(saved);
-			saved = NULL;
-			return (NULL);
-		}
+			return (free(saved), saved = NULL, NULL);
 	}
 	line = get_line(&saved);
 	return (line);
 }
 
-static ssize_t	read_line(int fd, char **saved)// char **saved (ptr to str) allows to modify the string 
+static ssize_t	read_line(int fd, char **saved)
 {
 	char	*buffer;
 	ssize_t	bytes_read;
@@ -83,7 +71,7 @@ static char	*get_line(char **saved)
 	new_line = ft_strchr(*saved, '\n');
 	if (new_line)
 	{
-		len = new_line - *saved + 1;// The +1 is to include de '\n' character
+		len = new_line - *saved + 1;
 		line = ft_substr(*saved, 0, len);
 		temp = ft_substr(*saved, len, ft_strlen(*saved) - len);
 		free(*saved);
@@ -123,23 +111,23 @@ int	main()
 	int		fd;
 	char	*line;
 
-	fd = open("animaniac.txt", O_RDONLY);
-	while ((line = get_next_line(fd)))
-	{
-		printf("%s", line);
-		free(line);
-	}
-	close(fd);
+	//fd = open("animaniac.txt", O_RDONLY);
+	//while ((line = get_next_line(fd)))
+	//{
+	//	printf("%s", line);
+	//	free(line);
+	//}
+	//close(fd);
 
-	fd = open("ghosts.txt", O_RDONLY);
-	while ((line = get_next_line(fd)))
-	{
-		printf("%s", line);
-		free(line);
-	}
-	close(fd);
+	//fd = open("ghosts.txt", O_RDONLY);
+	//while ((line = get_next_line(fd)))
+	//{
+	//	printf("%s", line);
+	//	free(line);
+	//}
+	//close(fd);
 
-	fd = open("hobbes.txt", O_RDONLY);
+	fd = open("big_line_with_nl", O_RDONLY);
 	while ((line = get_next_line(fd)))
 	{
 		printf("%s", line);
