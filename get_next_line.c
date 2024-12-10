@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: applecore <applecore@student.42.fr>        +#+  +:+       +#+        */
+/*   By: rjesus-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 18:02:44 by rjesus-d          #+#    #+#             */
-<<<<<<< HEAD
 /*   Updated: 2024/12/10 15:35:05 by rjesus-d         ###   ########.fr       */
-=======
-/*   Updated: 2024/12/06 00:11:29 by applecore        ###   ########.fr       */
->>>>>>> 8564bd1d83cf78dec721848e9649c4e958c21f08
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +32,10 @@ char	*get_next_line(int fd)
 	while (!ft_strchr(saved, '\n'))
 	{
 		bytes_read = read_line(fd, &saved);
-<<<<<<< HEAD
 		if (bytes_read == 0 && saved && *saved)
 			return (line = saved, saved = NULL, line);
 		if (bytes_read == 0 && (!saved || !*saved))
 			return (free(saved), saved = NULL, NULL);
-=======
-		if (bytes_read == 0 && saved && *saved)// EOF with remaining data
-		{
-			line = saved;// Return the remaining data
-			saved = NULL;// Reset static variable
-			return (line);// Return remaining data before EOF
-		}
-		if (bytes_read == 0 && (!saved || !*saved)) // EOF with no data
-		{
-			free(saved);// Free memory if it exists
-			saved = NULL;// Reset saved
-			return (NULL);// Return NULL to signal EOF
-		}
->>>>>>> 8564bd1d83cf78dec721848e9649c4e958c21f08
 		if (bytes_read < 0)
 			return (free(saved), saved = NULL, NULL);
 	}
