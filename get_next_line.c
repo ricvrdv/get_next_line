@@ -6,7 +6,7 @@
 /*   By: rjesus-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 18:02:44 by rjesus-d          #+#    #+#             */
-/*   Updated: 2024/12/11 15:26:21 by rjesus-d         ###   ########.fr       */
+/*   Updated: 2024/12/13 17:27:30 by rjesus-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,18 @@ static char	*extract_and_update_line(char **saved)
 	char	*temp;
 	size_t	len;
 
+	if (!saved || !*saved || !**saved)
+		return (NULL);
 	new_line = ft_strchr(*saved, '\n');
 	if (new_line)
 	{
 		len = new_line - *saved + 1;
 		line = ft_substr(*saved, 0, len);
+		if (!line)
+			return (free(*saved), NULL);
 		temp = ft_substr(*saved, len, ft_strlen(*saved) - len);
+		if (!temp)
+			return (free(*saved), free(line), NULL);
 		free(*saved);
 		*saved = temp;
 	}
@@ -101,7 +107,7 @@ char	*ft_strdup(const char *s)
 	if (!s)
 		return (NULL);
 	buffer = (char *)ft_calloc((ft_strlen(s) + 1), sizeof(char));
-	if (buffer == NULL)
+	if (!buffer)
 		return (NULL);
 	i = 0;
 	while (s[i] != '\0')
