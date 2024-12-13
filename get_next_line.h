@@ -6,7 +6,7 @@
 /*   By: rjesus-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:50:27 by rjesus-d          #+#    #+#             */
-/*   Updated: 2024/12/10 15:31:41 by rjesus-d         ###   ########.fr       */
+/*   Updated: 2024/12/10 18:56:50 by rjesus-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ char	*ft_strjoin(char *s1, const char *s2);
 char	*ft_substr(char	*s, size_t start, size_t len);
 size_t	ft_strlen(const char *s);
 char	*ft_strdup(const char *s);
+void	*ft_calloc(size_t nmemb, size_t size);
 
 #endif

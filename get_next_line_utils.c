@@ -6,7 +6,7 @@
 /*   By: rjesus-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:10:28 by rjesus-d          #+#    #+#             */
-/*   Updated: 2024/12/04 17:49:23 by rjesus-d         ###   ########.fr       */
+/*   Updated: 2024/12/11 16:57:30 by rjesus-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ size_t	ft_strlen(const char *s)
 	len = 0;
 	if (!s)
 		return (0);
-	while (*s && s[len])
+	while (s[len])
 		len++;
 	return (len);
 }
@@ -47,7 +47,7 @@ char	*ft_strjoin(char *s1, const char *s2)
 
 	if (!s1 || !s2)
 		return (NULL);
-	sjoint = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	sjoint = (char *)ft_calloc((ft_strlen(s1) + ft_strlen(s2) + 1), 1);
 	if (!sjoint)
 		return (NULL);
 	i = 0;
@@ -73,12 +73,14 @@ char	*ft_substr(char *s, size_t start, size_t len)
 	size_t	s_len;
 	size_t	i;
 
-	s_len = ft_strlen(s);
-	if (!s || start >= s_len)
+	if (!s)
 		return (NULL);
+	s_len = ft_strlen(s);
+	if (start >= s_len)
+		return (ft_strdup(""));
 	if (len > s_len - start)
 		len = s_len - start;
-	substring = (char *)malloc(sizeof(char) * (len + 1));
+	substring = (char *)ft_calloc(len + 1, sizeof(char));
 	if (!substring)
 		return (NULL);
 	i = 0;
@@ -86,4 +88,23 @@ char	*ft_substr(char *s, size_t start, size_t len)
 		substring[i++] = s[start++];
 	substring[i] = '\0';
 	return (substring);
+}
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	size_t			i;
+	unsigned char	*buffer;
+
+	if (nmemb == 0 || size == 0)
+		return (malloc(0));
+	buffer = (unsigned char *)malloc(nmemb * size);
+	if (!buffer)
+		return (NULL);
+	i = 0;
+	while (i < nmemb * size)
+	{
+		buffer[i] = 0;
+		i++;
+	}
+	return ((void *)buffer);
 }
