@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rjesus-d <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: applecore <applecore@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:10:28 by rjesus-d          #+#    #+#             */
-/*   Updated: 2024/12/11 16:57:30 by rjesus-d         ###   ########.fr       */
+/*   Updated: 2024/12/15 21:48:35 by applecore        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ char	*ft_strjoin(char *s1, const char *s2)
 		j++;
 	}
 	sjoint[i + j] = '\0';
-	free(s1);
 	return (sjoint);
 }
 
