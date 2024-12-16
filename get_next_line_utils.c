@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: applecore <applecore@student.42.fr>        +#+  +:+       +#+        */
+/*   By: rjesus-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:10:28 by rjesus-d          #+#    #+#             */
-/*   Updated: 2024/12/15 21:48:35 by applecore        ###   ########.fr       */
+/*   Updated: 2024/12/16 18:38:32 by rjesus-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-char	*ft_strjoin(char *s1, const char *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*sjoint;
 	size_t	i;
@@ -63,7 +63,7 @@ char	*ft_strjoin(char *s1, const char *s2)
 		j++;
 	}
 	sjoint[i + j] = '\0';
-	return (sjoint);
+	return (free_and_reset(&s1), free_and_reset(&s2), sjoint);
 }
 
 char	*ft_substr(char *s, size_t start, size_t len)

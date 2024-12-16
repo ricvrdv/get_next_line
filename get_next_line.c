@@ -6,7 +6,7 @@
 /*   By: rjesus-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 18:02:44 by rjesus-d          #+#    #+#             */
-/*   Updated: 2024/12/13 17:27:30 by rjesus-d         ###   ########.fr       */
+/*   Updated: 2024/12/16 18:47:23 by rjesus-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ char	*get_next_line(int fd)
 	char		*line;
 	ssize_t		bytes_read;
 
+	line = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (!saved)
@@ -33,11 +34,11 @@ char	*get_next_line(int fd)
 	{
 		bytes_read = read_file(fd, &saved);
 		if (bytes_read < 0)
-			return (free(saved), saved = NULL, NULL);
+			return (free_and_reset(&saved), NULL);
 		if (bytes_read == 0 && saved && *saved)
 			return (line = saved, saved = NULL, line);
 		if (bytes_read == 0 && (!saved || !*saved))
-			return (free(saved), saved = NULL, NULL);
+			return (free_and_reset(&saved), NULL);
 	}
 	line = extract_and_update_line(&saved);
 	return (line);
@@ -53,19 +54,17 @@ static ssize_t	read_file(int fd, char **saved)
 	if (!buffer)
 		return (-1);
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
-	if (bytes_read < 0)
-		return (free(buffer), -1);
+	if (bytes_read <= 0)
+		free_and_reset(&buffer);
 	if (bytes_read > 0)
 	{
 		buffer[bytes_read] = '\0';
 		temp = ft_strjoin(*saved, buffer);
-		free(buffer);
 		if (!temp)
 			return (*saved = NULL, -1);
 		*saved = temp;
+		buffer = NULL;
 	}
-	else
-		free(buffer);
 	return (bytes_read);
 }
 
@@ -76,19 +75,17 @@ static char	*extract_and_update_line(char **saved)
 	char	*temp;
 	size_t	len;
 
-	if (!saved || !*saved || !**saved)
-		return (NULL);
 	new_line = ft_strchr(*saved, '\n');
 	if (new_line)
 	{
 		len = new_line - *saved + 1;
 		line = ft_substr(*saved, 0, len);
 		if (!line)
-			return (free(*saved), NULL);
+			return (free_and_reset(&*saved), NULL);
 		temp = ft_substr(*saved, len, ft_strlen(*saved) - len);
 		if (!temp)
-			return (free(*saved), free(line), NULL);
-		free(*saved);
+			return (free_and_reset(&*saved), free_and_reset(&line), NULL);
+		free_and_reset(&*saved);
 		*saved = temp;
 	}
 	else
@@ -118,6 +115,15 @@ char	*ft_strdup(const char *s)
 	buffer[i] = '\0';
 	return (buffer);
 }
+
+void	free_and_reset(char **buffer)
+{
+	if (buffer && *buffer)
+	{
+		free(*buffer);
+		*buffer = NULL;
+	}
+}
 /*
 #include <stdio.h>
 #include <fcntl.h>
@@ -127,8 +133,7 @@ int	main()
 	int		fd;
 	char	*line;
 
-	//fd = open("empty.txt", O_RDONLY);
-	fd = -1;
+	fd = open("test.txt", O_RDONLY);
 	if (fd < 0)
 	{
 		perror("Error opening the file.");
@@ -139,22 +144,7 @@ int	main()
 		printf("%s", line);
 		free(line);
 	}
-	//close(fd);
-
-	//fd = open("ghosts.txt", O_RDONLY);
-	//while ((line = get_next_line(fd)))
-	//{
-	//	printf("%s", line);
-	//	free(line);
-	//}
-	//close(fd);
-	//fd = open("big_line_no_nl", O_RDONLY);
-	//while ((line = get_next_line(fd)))
-	//{
-	//	printf("%s", line);
-	//	free(line);
-	//}
-	//close(fd);
+	close(fd);
 	return (0);
 }
 */
