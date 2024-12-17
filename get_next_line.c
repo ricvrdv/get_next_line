@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rjesus-d <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: applecore <applecore@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 18:02:44 by rjesus-d          #+#    #+#             */
-/*   Updated: 2024/12/16 18:47:23 by rjesus-d         ###   ########.fr       */
+/*   Updated: 2024/12/17 21:27:46 by applecore        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,27 +142,91 @@ void	free_and_reset(char **buffer)
 		*buffer = NULL;
 	}
 }
-/*
-#include <stdio.h>
-#include <fcntl.h>
 
 int	main()
 {
 	int		fd;
 	char	*line;
 
-	fd = open("test.txt", O_RDONLY);
+	printf("-- Opening file everything_is_romantic.txt:\n");
+	fd = open("test_files/everything_is_romantic.txt", O_RDONLY);
 	if (fd < 0)
 	{
 		perror("Error opening the file.");
 		return (1);
 	}
+	printf("[SUCCESS]\n");
+	printf("-- Reading file:\n\n");
 	while ((line = get_next_line(fd)))
 	{
 		printf("%s", line);
 		free(line);
 	}
 	close(fd);
+
+	printf("\n\n-- Opening file empty.txt:\n");
+	fd = open("test_files/empty.txt", O_RDONLY);
+	if (fd < 0)
+	{
+		perror("Error opening the file.");
+		return (1);
+	}
+	printf("[SUCCESS]\n");
+	printf("-- Reading file:\n\n");
+	while ((line = get_next_line(fd)))
+	{
+		printf("%s", line);
+		free(line);
+	}
+	close(fd);
+	
+	printf("\n\n-- Opening file infinite_line_no_nl.txt:\n");
+	fd = open("test_files/infinite_line_no_nl.txt", O_RDONLY);
+	if (fd < 0)
+	{
+		perror("Error opening the file.");
+		return (1);
+	}
+	printf("[SUCCESS]\n");
+	printf("-- Reading file:\n\n");
+	while ((line = get_next_line(fd)))
+	{
+		printf("%s", line);
+		free(line);
+	}
+	close(fd);
+
+	printf("\n\n-- Opening file infinite_line_w_nl.txt:\n");
+	fd = open("test_files/infinite_line_w_nl.txt", O_RDONLY);
+	if (fd < 0)
+	{
+		perror("Error opening the file.");
+		return (1);
+	}
+	printf("[SUCCESS]\n");
+	printf("-- Reading file:\n\n");
+	while ((line = get_next_line(fd)))
+	{
+		printf("%s", line);
+		free(line);
+	}
+	close(fd);
+
+	printf("\n\n-- Opening file animaniac.txt:\n");
+	fd = open("test_files/animaniac.txt", O_RDONLY);
+	if (fd < 0)
+	{
+		perror("Error opening the file.");
+		return (1);
+	}
+	printf("[SUCCESS]\n");
+	printf("-- Reading file:\n\n");
+	while ((line = get_next_line(fd)))
+	{
+		printf("%s", line);
+		free(line);
+	}
+	close(fd);
+	printf("\n");
 	return (0);
 }
-*/
