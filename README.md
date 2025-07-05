@@ -1,6 +1,5 @@
 # 42 - GET_NEXT_LINE
 
-### [MILESTONE 1]
 ### SUMMARY
 This repository contains an implementation of the `get_next_line` function, which reads a file descriptor line by line. It is designed to handle files and standard input efficiently using a buffer to store intermediate data.
 
@@ -28,3 +27,6 @@ Compile the project using the following command:
 ```
 cc -Wall -Wextra -Werror -D BUFFER_SIZE=<value> get_next_line.c get_next_line_utils.c -o get_next_line
 ```
+
+----
+🐸 Feel free to fork, clone, or contact me for questions or feedback. 
